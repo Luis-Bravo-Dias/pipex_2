@@ -6,13 +6,34 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:20:10 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/02 10:49:24 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:33:44 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-char	*get_cmd(char *cmd, char **env)
+int	main(int ac, char **av, char **envp)
+{
+	t_all	pp;
+	int		exit_code;
+
+	if (ac < 5)
+	{
+		if (ac > 2 && !ft_strncmp("here_doc", av[1], 9))
+			return (er_msg("Use format: ",
+					"./pipex here_doc LIMITER cmd1 cmd2 ... cmdn file2.",
+					"", 1));
+		return (er_msg("Use format: ",
+				"./pipex file1 cmd1 cmd2 ... cmdn file2.", "", 1));
+	}
+	else if (ac < 6 && !ft_strncmp("here_doc", av[1], 9))
+		return (er_msg("Use format: ",
+				"./pipex here_doc LIMITER cmd1 cmd2 ... cmdn file2.", "", 1));
+	if (!env || env[0][0] == '\0')
+		
+}
+
+/*char	*get_cmd(char *cmd, char **env)
 {
 	char	*env_path;
 	char	**paths;
@@ -52,9 +73,9 @@ char	*get_cmd(char *cmd, char **env)
 	}
 	free(paths);
 	return (cmd_path);
-}
+}*/
 
-int	main(int ac, char **av, char **env)
+/*int	main(int ac, char **av, char **env)
 {
 	char	*cmd_path;
 	char	*options[3] = {"ls", "-la", NULL};
@@ -73,4 +94,4 @@ int	main(int ac, char **av, char **env)
 	printf("Victory!\n");
 	free(cmd_path);
 	return (0);
-}
+}*/
