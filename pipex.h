@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:01:20 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/08 12:49:47 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:37:29 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_all
 	int		heredoc;
 	int		fd_in;
 	int		fd_out;
-	int		*pip;
+	int		*pipe_fd;
 	int		nbr_cmds;
 	int		child;
 	int		*pids;
@@ -44,6 +44,10 @@ typedef struct	s_all
 
 char	*get_cmd(char *cmd, char **env);
 //utils.c
-int	er_msg(char *str1, char *str2, char *str3, int erno);
+int			er_msg(char *str1, char *str2, char *str3, int erno);
+static void	close_pipe_fds(t_all *pp);
+void		close_fds(t_all *pp);
+void		free_strs(char *str, char **strs);
+void		exit_error(int status, t_all *pp);
 
 #endif

@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:08:42 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/07 15:00:10 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:00:14 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	pipex(char **av, char **env)
+void	get_input(t_all *pp)
+{
+	if (pp->heredoc == 1)
+	{
+		
+	}
+}
+
+/*void	pipex(char **av, char **env)
 {
 	pid_t	child1;
 	pid_t	child2;
@@ -68,4 +76,4 @@ void	pipex(char **av, char **env)
 		}
 	}
 		
-}
+}*/

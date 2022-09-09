@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:20:10 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/08 15:33:44 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:41:58 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int ac, char **av, char **envp)
 		return (er_msg("Use format: ",
 				"./pipex here_doc LIMITER cmd1 cmd2 ... cmdn file2.", "", 1));
 	if (!env || env[0][0] == '\0')
+		exit_error(er_msg("Unexpected error.", "", "", &pp)):
+	
 		
 }
 
