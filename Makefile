@@ -6,7 +6,7 @@
 #    By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 10:58:20 by lleiria-          #+#    #+#              #
-#    Updated: 2022/09/09 12:56:03 by lleiria-         ###   ########.fr        #
+#    Updated: 2022/09/12 15:51:16 by lleiria-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INCLUDE		=	 -I ft_printf/ft_printf.h -I libft/libft.h -I get_next_line/get_next_
 SRCS_		=	main.c \
 				utils.c \
 				initiation.c \
+				files.c
 
 SRCS		=	$(addprefix $(_SRC), $(SRCS_))
 

@@ -6,17 +6,53 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:08:42 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/09 17:00:14 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/12 15:47:46 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
+void	get_heredoc(t_all *pp)
+{
+	int		tmp_fd;
+	int		stdin_fd;
+	char	*line;
+
+	tmp_fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	stdin_fd = dup(STDIN_FILENO);
+	if (tmp_fd == -1)
+		exit_error(er_msg("here_doc", ": ", strerror(errno), 1), pp);
+	line = "";
+	while (1)
+	{
+		ft_putstr_fd("here_doc < ", 1);
+		line = get_next_line(stdin_fd);
+		if (line == NULL)
+			break ;
+		if (ft_strlen(pp->av[2]) + 1 == ft_strlen(line)
+				&& !ft_strncmp(line, pp->av[2], ft_strlen(pp->av +1)))
+				close(stdin_fd);
+		else
+			ft_strlen(line, tmp_fd);
+	free(line);
+	}
+	close(tmp_fd);
+}
+
 void	get_input(t_all *pp)
 {
 	if (pp->heredoc == 1)
 	{
-		
+		get_heredoc(pp);
+		pp->fd_in = open(".heredoc.tmp", O_RDONLY);
+		if (pp->fd_in == -1)
+				exit_error(er_msg("here_doc", ": ", strerror(errno), 1), pp);
+	}
+	else
+	{
+		pp->fd_in = open(pp->av[1], O_RDONLY, 644);
+		if (pp->fd_in == -1)
+			er_msg(strerror(errno), ": ", pp->av[1], 1);
 	}
 }
 

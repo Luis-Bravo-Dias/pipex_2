@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:01:20 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/09 12:37:29 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/12 15:50:57 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,18 @@ typedef struct	s_all
 
 # define ERROR 1
 
-char	*get_cmd(char *cmd, char **env);
+char			*get_cmd(char *cmd, char **env);
 //utils.c
-int			er_msg(char *str1, char *str2, char *str3, int erno);
-static void	close_pipe_fds(t_all *pp);
-void		close_fds(t_all *pp);
-void		free_strs(char *str, char **strs);
-void		exit_error(int status, t_all *pp);
+int				er_msg(char *str1, char *str2, char *str3, int erno);
+static void		close_pipe_fds(t_all *pp);
+void			close_fds(t_all *pp);
+void			free_strs(char *str, char **strs);
+void			exit_error(int status, t_all *pp);
+//files.c
+void			get_heredoc(t_all *pp);
+void			get_input(t_all *pp);
+//initiation.c
+static t_all	clear_init(void);
+t_all			lets_init(int ac, char **av, char **env);
 
 #endif
