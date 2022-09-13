@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:01:20 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/12 15:50:57 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/13 10:50:16 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			exit_error(int status, t_all *pp);
 //files.c
 void			get_heredoc(t_all *pp);
 void			get_input(t_all *pp);
+void			get_output(t_all *pp);
 //initiation.c
 static t_all	clear_init(void);
 t_all			lets_init(int ac, char **av, char **env);

@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:08:42 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/12 15:47:46 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/13 13:06:37 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	get_heredoc(t_all *pp)
 		if (line == NULL)
 			break ;
 		if (ft_strlen(pp->av[2]) + 1 == ft_strlen(line)
-				&& !ft_strncmp(line, pp->av[2], ft_strlen(pp->av +1)))
-				close(stdin_fd);
+			&& !ft_strncmp(line, pp->av[2], ft_strlen(pp->av +1)))
+			close(stdin_fd);
 		else
 			ft_strlen(line, tmp_fd);
-	free(line);
+		free(line);
 	}
 	close(tmp_fd);
 }
@@ -46,7 +46,7 @@ void	get_input(t_all *pp)
 		get_heredoc(pp);
 		pp->fd_in = open(".heredoc.tmp", O_RDONLY);
 		if (pp->fd_in == -1)
-				exit_error(er_msg("here_doc", ": ", strerror(errno), 1), pp);
+			exit_error(er_msg("here_doc", ": ", strerror(errno), 1), pp);
 	}
 	else
 	{
@@ -54,6 +54,18 @@ void	get_input(t_all *pp)
 		if (pp->fd_in == -1)
 			er_msg(strerror(errno), ": ", pp->av[1], 1);
 	}
+}
+
+void	get_output(t_all *pp)
+{
+	if (pp->heredoc == 1)
+		pp->fd_out = open(pp->av[pp->ac - 1],
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		pp->fd_out = open(pp->av[pp->ac -1],
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (pp->fd_out == -1)
+		er_msg(strerror(errno), ": ", pp->av[pp->ac - 1], 1);
 }
 
 /*void	pipex(char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 12:48:32 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/09 12:35:07 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/13 13:08:10 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	er_msg(char *str1, char *str2, char *str3, int erno)
 static void	close_pipe_fds(t_all *pp)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < (pp->nbr_cmds - 1) * 2)
 	{
@@ -54,7 +54,7 @@ void	free_strs(char *str, char **strs)
 	if (strs != NULL)
 	{
 		i = 0;
-		while (strs[i]);
+		while (strs[i])
 		{
 			free(strs[i]);
 			i++;
@@ -74,7 +74,7 @@ void	exit_error(int status, t_all *pp)
 		if (pp->pids != NULL)
 			free(pp->pids);
 		if (pp->cmd_op != NULL || pp->cmd_path != NULL)
-			free_strs(pp->cmd_path, pp->cmd_op);		
+			free_strs(pp->cmd_path, pp->cmd_op);
 	}
 	if (pp->heredoc == 1)
 		unlink(".heredoc.tmp");
