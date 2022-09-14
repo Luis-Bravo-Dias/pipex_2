@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:01:20 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/13 10:50:16 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:43:05 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void			get_input(t_all *pp);
 void			get_output(t_all *pp);
 //initiation.c
 static t_all	clear_init(void);
+static void		create_pipes(t_all *pp);
 t_all			lets_init(int ac, char **av, char **env);
 
 #endif
