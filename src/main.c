@@ -6,13 +6,29 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:20:10 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/14 16:49:36 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:51:03 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-int	main(int ac, char **av, char **envp)
+static int	pipex(t_all *pp)
+{
+	int	exit_code;
+	
+	if (pipe(pp->pipe_fd) == -1)
+		exit_error(er_msg("pipe", ": ", strerror(errno), 1), pp);
+	pp->child = 0;
+	while (pp->child < pp->nbr_cmds)
+	{
+		pp->cmd_op = ft_split(pp->av[pp->child + 2 + pp->heredoc], '');
+		if (!pp->cmd_op)
+			exit_error(er_msg("unexpected error", "". "", 1), pp);
+		pp->cmd_path = get_cmd(pp->cmd_op[0], pp);
+	}
+}
+
+int	main(int ac, char **av, char **env)
 {
 	t_all	pp;
 	int		exit_code;
