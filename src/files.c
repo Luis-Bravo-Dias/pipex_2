@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:08:42 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/13 13:06:37 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:01:29 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	get_heredoc(t_all *pp)
 		if (line == NULL)
 			break ;
 		if (ft_strlen(pp->av[2]) + 1 == ft_strlen(line)
-			&& !ft_strncmp(line, pp->av[2], ft_strlen(pp->av +1)))
+			&& !ft_strncmp(line, pp->av[2], ft_strlen(pp->av[2] + 1)))
 			close(stdin_fd);
 		else
-			ft_strlen(line, tmp_fd);
+			ft_putstr_fd(line, tmp_fd);
 		free(line);
 	}
 	close(tmp_fd);

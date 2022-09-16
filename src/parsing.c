@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:55:51 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/16 10:44:49 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:04:26 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	**put_bars(char **paths)
 	tmp = NULL;
 	while (paths[i])
 	{
-		tmp = path[i];
+		tmp = paths[i];
 		paths[i] = ft_strjoin(paths[i], "/");
 		free_strs(tmp, NULL);
 		i++;
@@ -57,7 +57,7 @@ static char	**get_paths(char **env)
 	env_path = get_env_path(env);
 	if (!env_path)
 		return (NULL);
-	paths = ft_split(env_path, ":");
+	paths = ft_split(env_path, ':');
 	free_strs(env_path, NULL);
 	if (!paths)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:20:10 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/16 13:01:18 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/16 14:25:54 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ static int	pipex(t_all *pp)
 	pp->child = 0;
 	while (pp->child < pp->nbr_cmds)
 	{
-		pp->cmd_op = ft_split(pp->av[pp->child + 2 + pp->heredoc], '');
+		pp->cmd_op = ft_split(pp->av[pp->child + 2 + pp->heredoc], ' ');
 		if (!pp->cmd_op)
-			exit_error(er_msg("unexpected error", "". "", 1), pp);
+			exit_error(er_msg("unexpected error", "", "", 1), pp);
 		pp->cmd_path = get_cmd(pp->cmd_op[0], pp);
 		pp->pids[pp->child] = fork();
-		if (pp->pids[pp] == -1)
+		if (pp->pids[pp->child] == -1)
 			exit_error(er_msg("fork", ": ", strerror(errno), 1), pp);
 		else if (pp->pids[pp->child] == 0)
 			set_child_in_out(pp);
@@ -106,7 +106,7 @@ int	main(int ac, char **av, char **env)
 		return (er_msg("Use format: ",
 				"./pipex here_doc LIMITER cmd1 cmd2 ... cmdn file2.", "", 1));
 	if (!env || env[0][0] == '\0')
-		exit_error(er_msg("Unexpected error.", "", "", &pp));
+		exit_error(er_msg("Unexpected error.", "", "", 1), &pp);
 	pp = lets_init(ac, av, env);
 	exit_code = pipex(&pp);
 	return (exit_code);
