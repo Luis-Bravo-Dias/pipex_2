@@ -6,16 +6,65 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:20:10 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/15 17:51:03 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/16 13:01:18 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
+//Redirects the input and output file descriptors by duplicating
+//the given fds to the standard input and standard output respectively.
+static void	redirect_in_out(int input, int output, t_all *pp)
+{
+	if (dup2(input, STDIN_FILENO) == -1)
+		exit_error(1, pp);
+	if (dup2(output, STDOUT_FILENO) == -1)
+		exit_error(1, pp);
+}
+
+//if(first), if else(final), else(midle)
+static void	set_child_in_out(t_all *pp)
+{
+	if (pp->child == 0)
+		redirect_in_out(pp->fd_in, pp->pipe_fd[1], pp);
+	else if (pp->child == pp->nbr_cmds - 1)
+		redirect_in_out(pp->pipe_fd[2 * pp->child - 2], pp->fd_out, pp);
+	else
+		redirect_in_out(pp->pipe_fd[2 * pp->child - 2],
+			pp->pipe_fd[2 * pp->child + 1], pp);
+	close_fds(pp);
+	if (pp->cmd_op == NULL || pp->cmd_path == NULL)
+		exit_error(1, pp);
+	if (execve(pp->cmd_path, pp->cmd_op, pp->env) == -1)
+		exit_error(er_msg(pp->cmd_op[0], ": ", strerror(errno), 1), pp);
+}
+
+static int	wait_parent(t_all *pp)
+{
+	pid_t	wpid;
+	int		status;
+	int		exit_code;
+
+	close_fds(pp);
+	pp->child--;
+	exit_code = 1;
+	while (pp->child >= 0)
+	{
+		wpid = waitpid(pp->pids[pp->child], &status, 0);
+		if (wpid == pp->pids[pp->nbr_cmds - 1])
+			if ((pp->child == (pp->nbr_cmds - 1)) && WIFEXITED(status))
+				exit_code = WEXITSTATUS(status);
+		pp->child--;
+	}
+	free(pp->pipe_fd);
+	free(pp->pids);
+	return (exit_code);
+}
+
 static int	pipex(t_all *pp)
 {
 	int	exit_code;
-	
+
 	if (pipe(pp->pipe_fd) == -1)
 		exit_error(er_msg("pipe", ": ", strerror(errno), 1), pp);
 	pp->child = 0;
@@ -25,7 +74,18 @@ static int	pipex(t_all *pp)
 		if (!pp->cmd_op)
 			exit_error(er_msg("unexpected error", "". "", 1), pp);
 		pp->cmd_path = get_cmd(pp->cmd_op[0], pp);
+		pp->pids[pp->child] = fork();
+		if (pp->pids[pp] == -1)
+			exit_error(er_msg("fork", ": ", strerror(errno), 1), pp);
+		else if (pp->pids[pp->child] == 0)
+			set_child_in_out(pp);
+		free_strs(pp->cmd_path, pp->cmd_op);
+		pp->child++;
 	}
+	exit_code = wait_parent(pp);
+	if (pp->heredoc == 1)
+		unlink(".heredoc.tmp");
+	return (exit_code);
 }
 
 int	main(int ac, char **av, char **env)
@@ -48,7 +108,8 @@ int	main(int ac, char **av, char **env)
 	if (!env || env[0][0] == '\0')
 		exit_error(er_msg("Unexpected error.", "", "", &pp));
 	pp = lets_init(ac, av, env);
-	exit_code =
+	exit_code = pipex(&pp);
+	return (exit_code);
 }
 
 /*char	*get_cmd(char *cmd, char **env)

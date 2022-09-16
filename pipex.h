@@ -6,7 +6,7 @@
 /*   By: lleiria- <lleiria-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:01:20 by lleiria-          #+#    #+#             */
-/*   Updated: 2022/09/14 16:43:05 by lleiria-         ###   ########.fr       */
+/*   Updated: 2022/09/16 13:02:58 by lleiria-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-typedef struct	s_all
+typedef struct s_all
 {
 	char	**env;
 	char	**av;
@@ -42,7 +42,6 @@ typedef struct	s_all
 
 # define ERROR 1
 
-char			*get_cmd(char *cmd, char **env);
 //utils.c
 int				er_msg(char *str1, char *str2, char *str3, int erno);
 static void		close_pipe_fds(t_all *pp);
@@ -57,5 +56,16 @@ void			get_output(t_all *pp);
 static t_all	clear_init(void);
 static void		create_pipes(t_all *pp);
 t_all			lets_init(int ac, char **av, char **env);
+//parsing
+static char		*get_env_path(char **env);
+static char		**put_bars(char **paths);
+static char		**get_paths(char **env);
+static char		*get_cmd_path(char *cmd, char **paths);
+char			*get_cmd(char *cmd, t_all *pp);
+//main.c
+static void		redirect_in_out(int input, int output, t_all *pp);
+static void		set_child_in_out(t_all *pp);
+static int		wait_parent(t_all *pp);
+static int		pipex(t_all *pp);
 
 #endif
